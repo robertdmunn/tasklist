@@ -1,14 +1,8 @@
-var mysql = require( 'mysql' );
+const dbConfig = require( "../config/dbconfig.js" );
 
 module.exports = init;
 
-var pool  = mysql.createPool({
-  connectionLimit : 50,
-  host            : 'localhost',
-  user            : 'root',
-  password        : '***REMOVED***',
-  database        : 'project_master'
-});
+const pool = dbConfig.pool;
 
 function init(){
   return gateway;
@@ -26,7 +20,7 @@ gateway = {
             connection.release();
             if (error) reject( error );
 
-            resolve( { results: results, fields: fields } );
+            resolve( results );
           });
       });
     });

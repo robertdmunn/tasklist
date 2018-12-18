@@ -1,15 +1,8 @@
-
-var mysql = require( 'mysql' );
+const dbConfig = require( "../config/dbconfig.js" );
 
 module.exports = init;
 
-const pool = mysql.createPool({
-  connectionLimit : 50,
-  host            : 'localhost',
-  user            : 'root',
-  password        : '***REMOVED***',
-  database        : 'project_master'
-});
+const pool = dbConfig.pool;
 
 function init(){
   return dao;
@@ -20,18 +13,14 @@ var dao = {
     return new Promise( function( resolve, reject ){
       pool.getConnection(function(err, connection) {
         if (err) throw err;
-
-        connection.query('INSERT INTO tasks ( taskName, dateDue ) VALUES ( ?, ? )',
+        connection.query('INSERT INTO tasks ( taskName, dateCreated, dateDue ) VALUES ( ?, curdate(), ? )',
           [taskName, dateDue],
           function (error, results, fields) {
 
             connection.release();
 
             if (error) reject( error );
-
-            console.log( results );
-
-            resolve( read( results.insertID ) );
+            resolve( results.insertId );
           });
       });
     });
@@ -49,8 +38,7 @@ var dao = {
             connection.release();
 
             if (error) reject( error );
-
-            resolve ( { results: results, fields: fields } );
+            resolve( results[0] );
           });
       });
     });
@@ -61,15 +49,16 @@ var dao = {
       pool.getConnection(function(err, connection) {
         if (err) throw err;
         var dateCompleted = ( complete ? new Date() : null );
-        connection.query('UPDATE tasks SET taskName ?, dateDue = ?, dateCompleted = ? WHERE taskID = ?',
-          [ taskName, dateDue, dateCompleted, taskID ],
+        var due = new Date( dateDue );
+        connection.query('UPDATE tasks SET taskName = ?, dateDue = ?, dateCompleted = ? WHERE taskID = ?',
+          [ taskName, due, dateCompleted, taskID ],
           function (error, results, fields){
 
             connection.release();
 
             if (error) reject( error );
 
-            resolve( read( taskID ) );
+            resolve(true);
           });
       });
     });
