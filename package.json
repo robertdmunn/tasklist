@@ -1,7 +1,7 @@
 {
   "name": "nodehttp",
   "version": "0.1.0",
-  "description": "node js learning code",
+  "description": "example app for alt-seven and NodeJS",
   "main": "node.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
