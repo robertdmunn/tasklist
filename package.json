@@ -1,5 +1,5 @@
 {
-  "name": "nodehttp",
+  "name": "tasklist",
   "version": "0.1.0",
   "description": "example app for alt-seven and NodeJS",
   "main": "node.js",
