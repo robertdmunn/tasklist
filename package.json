@@ -9,7 +9,7 @@
   "author": "",
   "license": "MPL",
   "dependencies": {
-    "altseven": "^1.0.1",
+    "altseven": "^1.0.4",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "gadget-ui": "^5.3.2",

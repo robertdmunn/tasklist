@@ -1,0 +1,20 @@
+{
+  "name": "tasklist",
+  "version": "0.1.0",
+  "authors": [
+    "Robert Munn <robertdmunn@gmail.com>"
+  ],
+  "description": "example app for alt-seven and NodeJS",
+  "main": "index.js",
+  "license": "MPL",
+  "homepage": "",
+  "private": false,
+  "ignore": [
+    "bower_components",
+    "node_modules"
+    ],
+  "dependencies": {
+  	"velocity" : "*",
+    "mustache.js" : "*"
+  }
+}
