@@ -9,7 +9,7 @@ The application depends on several packages, some of which are alt-seven depende
 
 Then run the application from CLI:
 
-$ node index.js
+    $ node index.js
 
 Open the application in your browser at:
 
