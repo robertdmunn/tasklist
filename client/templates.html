@@ -1,0 +1,38 @@
+
+<script id="taskForm" type="text/html">
+	<div name="taskForm">
+		<h3>task</h3>
+		{{> taskList}}
+		<form>
+			<div class="row">
+				<div class="col w10 bold">Task</div>
+				<div class="col w10 bold">Date Due</div>
+				<div class="col w10"></div>
+			</div>
+			<div class="row">
+				<div class="col w10"><input name="taskInput" value="{{text}}"  type="text" /> </div>
+				<div class="col w10"><input name="dateDue" value="{{dateDue}}" size="8" placeholder="date due" type="date" /> </div>
+				<div class="col w10"><button name="taskSubmit">Add #{{next}}</button></div>
+			</div>
+		</form>
+		</div>
+</script>
+
+<script id="taskList" type="text/html">
+	<div class="row">
+		<div class="col w10 bold">Task</div>
+		<div class="col w10 bold">Date Due</div>
+		<div class="col w5 bold centered">Complete</div>
+		<div class="col w5 bold centered">Delete</div>
+	</div>
+	<div id="taskList">
+		{{#items}}
+		<div class="row task" data-id="{{taskID}}">
+			<div class="col w10">{{taskName}}</div>
+			<div class="col w10">{{dateDue}}</div>
+			<div class="col w5 centered"><input name="complete" type="checkbox" value="{{taskID}}" data-date="{{dateCompleted}}"/>{{dateCompleted}}</div>
+			<div class="col w5 centered"><input name="delete" type="checkbox" value="{{taskID}}"/></div>
+		</div>
+		{{/items}}
+	</div>
+</script>

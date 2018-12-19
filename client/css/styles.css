@@ -1,0 +1,66 @@
+html, body{
+ margin:0;
+ padding:1em;
+ font-family: Geneva, Arial, Helevtica, sans;
+ position:relative;
+
+}
+
+div.row{
+  display:block;
+}
+
+div.col{
+  display:inline-block;
+  padding: .5em;
+}
+
+div.w10{
+  width:10em;
+}
+
+div.w5{
+  width:5em;
+}
+
+div.md{
+  /* width: 10em; */
+}
+
+div.pane{
+  border: 1px solid silver;
+  border-radius: 5px;
+  padding: 1em;
+}
+
+div.completedTask div{
+  text-decoration: line-through;
+}
+
+div.centered{
+  text-align: center;
+}
+
+.right-align{
+  text-align: right;
+}
+
+#consoleDiv{
+  overflow:scroll !important;
+}
+
+input{
+  width:100%;
+}
+
+input[type='text'], input[type='date']{
+  height:2em;
+}
+
+.bold{
+  font-weight: bold;
+}
+
+button{
+  height:2em;
+}

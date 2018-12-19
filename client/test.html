@@ -1,0 +1,138 @@
+<script>
+
+  var json = { taskID: 1, taskName: 'Something', dateDue: '2018-12-25'};
+
+  var tasks = [
+
+  {
+    "taskID": 9,
+    "taskName": "Work work",
+    "dateDue": "2018-12-19T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  },
+  {
+    "taskID": 3,
+    "taskName": "Make it.",
+    "dateDue": "2018-12-20T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  },
+  {
+    "taskID": 4,
+    "taskName": "Make it.",
+    "dateDue": "2018-12-20T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  },
+  {
+    "taskID": 16,
+    "taskName": "like it more",
+    "dateDue": "2018-12-24T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  },
+  {
+    "taskID": 15,
+    "taskName": "like it",
+    "dateDue": "2018-12-24T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  },
+  {
+    "taskID": 17,
+    "taskName": "uh huh",
+    "dateDue": "2018-12-26T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  },
+  {
+    "taskID": 12,
+    "taskName": "let ie",
+    "dateDue": "2018-12-26T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  },
+  {
+    "taskID": 18,
+    "taskName": "nope",
+    "dateDue": "2018-12-26T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  },
+  {
+    "taskID": 8,
+    "taskName": "Stand up",
+    "dateDue": "2018-12-26T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  },
+  {
+    "taskID": 7,
+    "taskName": "Go to Colorado",
+    "dateDue": "2018-12-26T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  },
+  {
+    "taskID": 11,
+    "taskName": "mine",
+    "dateDue": "2018-12-27T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  },
+  {
+    "taskID": 14,
+    "taskName": "more pooping",
+    "dateDue": "2018-12-27T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  },
+  {
+    "taskID": 6,
+    "taskName": "Move over",
+    "dateDue": "2018-12-27T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  },
+  {
+    "taskID": 5,
+    "taskName": "go on",
+    "dateDue": "2018-12-27T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  },
+  {
+    "taskID": 2,
+    "taskName": "Some task",
+    "dateDue": "2018-12-28T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  },
+  {
+    "taskID": 13,
+    "taskName": "poop",
+    "dateDue": "2019-01-02T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  },
+  {
+    "taskID": 10,
+    "taskName": "Roll over",
+    "dateDue": "2019-01-02T07:00:00.000Z",
+    "dateCreated": "2018-12-12T07:00:00.000Z",
+    "dateCompleted": null
+  }
+];
+
+  var result = tasks.find( function( task, idx ){
+      if (task.taskID === json.taskID) {
+          tasks[idx] = json;
+          return true;
+      }
+  });
+  console.log( result );
+  if( ! result ) tasks.push( json );
+
+  console.log( tasks );
+</script>
