@@ -3,60 +3,31 @@
     <title>
       NodeJS Task List
     </title>
-    <script src="/lib/modlazy/dist/modlazy.min.js"></script>
-    <script>
-      modlazy.load(["/js/app.components.js < /js/app.remote.js < /js/app.utils.js < /js/app.main.js < /js/app.events.js < /lib/altseven/dist/a7.js < /lib/gadget-ui/dist/gadget-ui.js < /lib/velocity/velocity.js ",
-        "/lib/mustache.js/mustache.js", "/css/styles.css", "/lib/altseven/dist/a7.css",
-        "/lib/gadget-ui/dist/gadget-ui.css",
-        "/lib/open-iconic/font/css/open-iconic.css"
-      ], function() {
-        var
-          options = {
-            auth: { // sessionTimeout: ( 60 * 15 * 1000 ) // default time in  milliseconds to refresh system auth
-            },
-            console: {
-              enabled: true,
-              wsServer: 'ws://127.0.0.1:8000',
-              top: 100,
-              left: 800,
-              height: 300,
-              width: 500
-            },
-            logging: {
-              logLevel: "INFO,ERROR,FATAL,TRACE"
-            },
-            remote: {
-              modules: app.remote,
-            //  loginURL: "/test/auth.cfc?method=login",
-            //  refreshURL: "/test/auth.cfc?method=refresh",
-              useTokens: false // defaults to true for the auth system
-            },
-            ui: { // renderer: // renderer is implicitly set by existence of the templating library, currently Mustache or Handlebars
-              templates: "/templates.html"
-            }
-          };
-        var p = new Promise(function(resolve,
-          reject) {
-          a7.init(options, resolve, reject);
-        });
-        p.then(function(state) {
-          app.main.init(state);
-        });
-        p['catch'](function(message) {
-          console.log(
-            "Something went wrong.");
-        });
-      });
+    <link href="/css/styles.css" rel="stylesheet" type="text/css">
+  	<link href="/lib/altseven/dist/a7.css" rel="stylesheet" type="text/css">
+  	<link href="/lib/gadget-ui/dist/gadget-ui.css" rel="stylesheet" type="text/css">
+  	<link href="/lib/open-iconic/font/css/open-iconic.css" rel="stylesheet" type="text/css">
+
+    <script type="module">
+    import {application} from '/js/app.js';
+
+    var app = application();
+
     </script>
   </head>
 
   <body>
     <div name="main">
-  		<div name="app" >
-
+  		<div name="anon" style="display:none;">
   		</div>
+  		<div name="secure" style="display:none;">
+  			<div name="header">
 
+  			</div>
+  			<div name="app">
+
+  			</div>
+  		</div>
   	</div>
-
   </body>
 </html>
