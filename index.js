@@ -14,6 +14,8 @@ app.use( "/lib/open-iconic", express.static( 'node_modules/open-iconic' ) );
 
 // routes for the API
 require( './routes/tasks.js' )(app);
+require( './routes/auth.js' )(app);
+require( './routes/users.js' )(app);
 
 // set our listener
 var server = app.listen( 4000, function(){

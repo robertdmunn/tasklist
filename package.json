@@ -1,19 +1,23 @@
 {
   "name": "tasklist",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "example app for alt-seven and NodeJS",
-  "main": "node.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "MPL",
   "dependencies": {
-    "altseven": "^1.0.4",
+    "altseven": "^3.0.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "gadget-ui": "^5.3.2",
+    "gadget-ui": "^6.0.1",
+    "js-base64": "^2.5.0",
     "modlazy": "^1.0.0",
-    "mysql": "^2.16.0"
+    "mysql": "^2.16.0",
+    "open-iconic": "^1.1.1",
+    "sha.js": "^2.4.11",
+    "tiny-aop": "^0.1.2"
   }
 }

@@ -1,10 +1,10 @@
 
-const taskservice = require( '../model/taskservice' );
+const userservice = require( '../model/userservice' );
 
 module.exports = {
 
   getAll: function( request, response ){
-    taskservice.getAll()
+    userservice.getAll()
       .then( function( results ){
         response.send( JSON.stringify( results ) );
       })
@@ -14,13 +14,24 @@ module.exports = {
       });
   },
 
+  getByUsername: function( request, response ){
+    userservice.getByUsername( request.body.username )
+      .then( function( results ){
+        response.send( JSON.stringify( results ) );
+      })
+      .catch( function( error ){
+        console.log( error );
+        response.send( JSON.stringify( error ) );
+      })
+  },
+
   create: function( request, response){
-    taskservice.create( request.body.taskName, request.body.dateDue )
+    userservice.create( request.body.username, request.body.password, request.body.firstName, request.body.lastName )
       .then( function( results ){
         //we are reading back the inserted row
-        taskservice.read( results )
-          .then( function( task ){
-            response.send( JSON.stringify( task ) );
+        userservice.read( results )
+          .then( function( user ){
+            response.send( JSON.stringify( user ) );
           })
           .catch( function( error ){
             console.log( error );
@@ -34,7 +45,7 @@ module.exports = {
   },
 
   read: function( request, response){
-    taskservice.read( request.params.ID )
+    userservice.read( request.params.ID )
       .then( function( results ){
         response.send( JSON.stringify( results ) );
       })
@@ -45,13 +56,12 @@ module.exports = {
   },
 
   update: function( request, response){
-    //response.send( JSON.stringify( request.body ) );
-     taskservice.update( request.params.ID, request.body.taskName, request.body.dateDue, request.body.complete )
-      .then( function( results ){
+     userservice.update( request.params.ID, request.body.username, request.body.password, request.body.firstName, request.body.lastName )
+      .then( function( user ){
         //we are reading back the updated row
-        taskservice.read( request.body.taskID )
-          .then( function( task ){
-            response.send( JSON.stringify( task ) );
+        userservice.read( request.body.userID )
+          .then( function( user ){
+            response.send( JSON.stringify( user ) );
           })
           .catch( function( error ){
             console.log( error );
@@ -65,7 +75,7 @@ module.exports = {
   },
 
   delete: function( request, response){
-    taskservice.delete( request.params.ID )
+    userservice.delete( request.params.ID )
       .then( function( success ){
         response.send( JSON.stringify( success ) );
       })
