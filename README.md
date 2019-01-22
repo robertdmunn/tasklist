@@ -1,8 +1,10 @@
 tasklist, and example app CRUD REST API app written using NodeJS on the server and the alt-seven JavaScript framework on the client.
 
-alt-seven is a client-side framework I built last year while exploring ideas in JavaScript. It isn't feature-complete, but it does enough to write a trivial example app.
+alt-seven is a client-side JavaScript framework. You can see the framework at:
 
-The application depends on several packages, some of which are alt-seven dependencies and some of which are dependencies of the NodeJS application. To run the application, you need to install the dependencies from both Bower and npm. (Yes, I know, not ideal. Sue me. :-) )
+https://github.com/robertdmunn/altseven
+
+The application depends on several packages, some of which are altseven dependencies and some of which are dependencies of the NodeJS application. To run the application, you need to install the dependencies from both Bower and npm.
 
     $ bower install
     $ npm install

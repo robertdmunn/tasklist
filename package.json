@@ -1,6 +1,6 @@
 {
   "name": "tasklist",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "example app for alt-seven and NodeJS",
   "main": "index.js",
   "scripts": {
