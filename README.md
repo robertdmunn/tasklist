@@ -9,6 +9,10 @@ The application depends on several packages, some of which are altseven dependen
     $ bower install
     $ npm install
 
+To configure the database, create an empty database schema in MySQL or MariaDB. Run /database/script.sql on the newly created database to create the tables you need.
+
+Make sure to update the name and username/password for the database in /config/dbconfig.js.
+
 Then run the application from CLI:
 
     $ node index.js
