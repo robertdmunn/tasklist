@@ -17,3 +17,6 @@ CREATE TABLE `users` (
   `dateCreated` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into users ( username, password, firstname, lastname, datecreated)
+values( 'user','password','Test','User',curdate());
