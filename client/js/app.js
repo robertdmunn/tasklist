@@ -103,7 +103,9 @@ var app = {
 				},
         clickSubmit: function(event) {
           event.preventDefault();
-	        a7.events.publish( "task.create", { taskName: todo.state.text, dateDue: todo.state.dateDue, view: todo } );
+          var args = { taskName: todo.state.text, dateDue: todo.state.dateDue, view: todo };
+          todo.setState( { text: "", dateDue: "" } );
+	        a7.events.publish( "task.create", args );
         }
       };
 
@@ -306,10 +308,9 @@ var app = {
 	          task.dateCompleted = ( task.dateCompleted === null ? "" : app.utils.formatDate( task.dateCompleted ) );
 	          tasks.push( task );
 	          a7.model.set( "tasks", tasks );
-	          a7.log.trace( obj.view );
 	          // set the state of any view that was passed in
 	          if( obj.view !== undefined ){
-	            obj.view.setState( { items: a7.model.get( "tasks" ) } );
+	            obj.view.props.todoList.setState( { items: a7.model.get( "tasks" ) } );
 	          }
 	        });
 	    },
