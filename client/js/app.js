@@ -30,7 +30,7 @@ var app = {
         } ) );
 
         if( secure ){
-          a7.events.publish( "task.getAll", { view: a7.ui.getView( 'todo' ) } );
+          a7.events.publish( "task.getAll", {} );
         }
         app.ui.setLayout(secure);
       }
@@ -60,7 +60,7 @@ var app = {
       loginHandler: function(json) {
         if( json.success ){
           a7.ui.views['header'].setState( { user: a7.model.get( "a7.user" ) } );
-          a7.events.publish( "task.getAll", { view: a7.ui.getView( 'todo' ) } );
+          a7.events.publish( "task.getAll", {} );
         }
         app.ui.setLayout(json.success);
       }
@@ -103,7 +103,7 @@ var app = {
 				},
         clickSubmit: function(event) {
           event.preventDefault();
-          var args = { taskName: todo.state.text, dateDue: todo.state.dateDue, view: todo };
+          var args = { taskName: todo.state.text, dateDue: todo.state.dateDue };
           todo.setState( { text: "", dateDue: "" } );
 	        a7.events.publish( "task.create", args );
         }
@@ -159,7 +159,7 @@ var app = {
 							return true;
 						}
 					});
-					a7.events.publish( "task.update", { task: task, view: todolist });
+					a7.events.publish( "task.update", { task: task});
 				},
 				deleteTask: function( event ){
 					var task = todolist.state.items.find( function( obj, idx ){
@@ -167,7 +167,7 @@ var app = {
 							return true;
 						}
 					});
-					a7.events.publish( "task.delete", { task: task, view: todolist });
+					a7.events.publish( "task.delete", { task: task });
 				}
 			};
 
@@ -275,10 +275,8 @@ var app = {
 	            task.dateCompleted = ( task.dateCompleted === null ? "" : app.utils.formatDate( task.dateCompleted ) );
 	          });
 	          a7.model.set( "tasks", json );
-	          // set the state of any view that was passed in
-	          if( obj.view !== undefined ){
-              obj.view.props.todoList.setState( { items: a7.model.get( "tasks" ) } );
-	          }
+
+            a7.ui.getView('todoList').setState( { items: a7.model.get( "tasks" ) } );
 	        });
 	    },
 	    create: function( obj ){
@@ -308,10 +306,7 @@ var app = {
 	          task.dateCompleted = ( task.dateCompleted === null ? "" : app.utils.formatDate( task.dateCompleted ) );
 	          tasks.push( task );
 	          a7.model.set( "tasks", tasks );
-	          // set the state of any view that was passed in
-	          if( obj.view !== undefined ){
-	            obj.view.props.todoList.setState( { items: a7.model.get( "tasks" ) } );
-	          }
+	          a7.ui.getView('todoList').setState( { items: a7.model.get( "tasks" ) } );
 	        });
 	    },
 	    read: function( obj ){
@@ -347,11 +342,7 @@ var app = {
 	          if( ! result ) tasks.push( json );
 
 	          a7.model.set( "tasks", tasks );
-	          a7.log.trace( obj.view );
-	          // set the state of any view that was passed in
-	          if( obj.view !== undefined ){
-              obj.view.setState( { items: a7.model.get( "tasks" ) } );
-	          }
+            a7.ui.getView('todoList').setState( { items: a7.model.get( "tasks" ) } );
 	        });
 	    },
 	    update: function( obj ){
@@ -386,11 +377,7 @@ var app = {
 	              }
 	          });
 	          a7.model.set( "tasks", tasks );
-	          a7.log.trace( obj.view );
-	          // set the state of any view that was passed in
-	          if( obj.view !== undefined ){
-              obj.view.setState( { items: a7.model.get( "tasks" ) } );
-	          }
+	          a7.ui.getView('todoList').setState( { items: a7.model.get( "tasks" ) } );
 	        });
 	    },
 	    delete: function( obj ){
@@ -423,11 +410,7 @@ var app = {
 	          }
 
 	          a7.model.set( "tasks", tasks );
-	          a7.log.trace( obj.view );
-	          // set the state of any view that was passed in
-	          if( obj.view !== undefined ){
-	            obj.view.setState( { items: a7.model.get( "tasks" ) } );
-	          }
+	          a7.ui.getView('todoList').setState( { items: a7.model.get( "tasks" ) } );
 	        });
 	    },
 	  }
