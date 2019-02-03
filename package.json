@@ -1,6 +1,6 @@
 {
   "name": "tasklist",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "example app for alt-seven and NodeJS",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   "author": "",
   "license": "MPL",
   "dependencies": {
-    "altseven": "^3.0.0",
+    "altseven": "^3.2.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "gadget-ui": "^6.0.1",

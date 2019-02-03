@@ -1,3 +1,4 @@
+
 import {a7} from '/lib/altseven/dist/a7.js';
 // you only need to import the floatingpane if you use it as the container for the console
 import {floatingpane} from '/lib/gadget-ui/dist/gadget-ui.es6.js';
@@ -19,7 +20,7 @@ var app = {
         // render the login form
         a7.ui.register( app.components.LoginForm( { id: 'loginForm', selector: "div[name='anon']" } ) );
 
-        var user = a7.model.get("a7.user");
+        var user = a7.model.get("user");
 
         a7.ui.register( app.components.Header( { id: 'header', user: user, selector: "div[name='header']" } ) );
 
@@ -47,7 +48,7 @@ var app = {
       });
 
       promise.then(function(secure) {
-        a7.ui.views['header'].setState( { user: a7.model.get( "a7.user" ) } );
+        a7.ui.views['header'].setState( { user: a7.model.get( "user" ) } );
 
         app.ui.setLayout(secure);
       });
@@ -59,7 +60,7 @@ var app = {
       authenticate: _authenticate,
       loginHandler: function(json) {
         if( json.success ){
-          a7.ui.views['header'].setState( { user: a7.model.get( "a7.user" ) } );
+          a7.ui.views['header'].setState( { user: a7.model.get( "user" ) } );
           a7.events.publish( "task.getAll", {} );
         }
         app.ui.setLayout(json.success);
@@ -74,7 +75,13 @@ var app = {
         text: "",
 				dateDue: ""
       };
+      // set the defaults
+      a7.model.set( "todo", todo.state );
 
+/*       todo.props.todoList.on( "mustRender", function(){
+        a7.ui.views['todo'].fireEvent( "mustRender" );
+      }.bind( todo ) );
+ */
       todo.template = function() {
         return `<div name="todoForm">
 				<h3>tasks</h3>
@@ -96,15 +103,20 @@ var app = {
 
       todo.eventHandlers = {
         changeTodoInput: function(event) {
-          todo.state.text = event.target.value;
+          var todoData = a7.model.get( "todo" );
+          todoData.text = event.target.value;
+          a7.model.set( "todo", todoData );
         },
 				changeDateDue: function(event){
-					todo.state.dateDue = event.target.value;
+          var todoData = a7.model.get( "todo" );
+          todoData.dateDue = event.target.value;
+          a7.model.set( "todo", todoData );
 				},
         clickSubmit: function(event) {
           event.preventDefault();
-          var args = { taskName: todo.state.text, dateDue: todo.state.dateDue };
-          todo.setState( { text: "", dateDue: "" } );
+          var args = a7.model.get( "todo" );
+          a7.model.set( "todo",  { text: "", dateDue: "" } );
+          todo.setState( a7.model.get( "todo" ) );
 	        a7.events.publish( "task.create", args );
         }
       };
@@ -276,7 +288,9 @@ var app = {
 	          });
 	          a7.model.set( "tasks", json );
 
-            a7.ui.getView('todoList').setState( { items: a7.model.get( "tasks" ) } );
+            a7.ui.views['todoList'].setState( { items: a7.model.get( "tasks" ) } );
+            // request a render to the todo component so the item # is updated on the Add button
+            a7.ui.views['todo'].fireEvent( "mustRender" );
 	        });
 	    },
 	    create: function( obj ){
@@ -288,7 +302,7 @@ var app = {
 	                        'Accept': 'application/json, application/xml, text/play, text/html, *.*',
 	                        'Content-Type': 'application/json; charset=utf-8'
 	                      },
-	                      body: JSON.stringify( { taskName: obj.taskName,
+	                      body: JSON.stringify( { taskName: obj.text,
 	                              dateDue: obj.dateDue } )
 	                    };
 
