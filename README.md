@@ -9,7 +9,14 @@ The application depends on several packages, some of which are altseven dependen
     $ bower install
     $ npm install
 
-To configure the database, create an empty database schema in MySQL or MariaDB. Run /database/script.sql on the newly created database to create the tables you need.
+To configure the database, create an empty database schema in MySQL or MariaDB. Run /database/script.sql on the newly created database to create the tables you need. Then run:
+
+     $ node hashpassword.js
+
+Copy the console output and update the hash field of the users table with the hash value:
+
+update users set hash = '<hashvalue>';
+
 
 Make sure to update the name and username/password for the database in /config/dbconfig.js.
 
