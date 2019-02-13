@@ -56,7 +56,7 @@ module.exports = {
   },
 
   update: function( request, response){
-     userservice.update( request.params.ID, request.body.username, request.body.password, request.body.firstName, request.body.lastName )
+     userservice.update( request.params.ID, request.body.username, request.body.firstName, request.body.lastName )
       .then( function( user ){
         //we are reading back the updated row
         userservice.read( request.body.userID )

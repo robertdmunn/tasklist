@@ -18,5 +18,5 @@ module.exports = {
     secured: secured,
     open: open
   },
-  ttl: 1800 // in seconds
+  ttl: 30 // in minutes
 }

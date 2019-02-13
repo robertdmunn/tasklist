@@ -1,8 +1,8 @@
 
 const userservice = require( '../model/userservice' );
 const utils = require( '../model/utils' );
-const shajs = require('sha.js');
 const Base64 = require('js-base64').Base64;
+const bcrypt = require('bcryptjs');
 
 module.exports = {
 
@@ -19,16 +19,18 @@ module.exports = {
     userservice.getByUsername( username )
       .then( function( results ){
         let valid = false;
-        console.log( results[0].password );
-        //response.send( JSON.stringify( results ) );
+        console.log(  "user: " );
+        console.log( results[0] );
         if( results.length ){
-          let hash = new shajs.sha512().update( password ).digest('hex');
-          console.log( "hash:" + hash );
-          valid = ( hash === results[0].password );
+          valid = bcrypt.compareSync( password, results[0].hash );
         }
+        console.log( "valid: " + valid );
         if( valid ){
-          response.setHeader( "X-Token", utils.generateToken( results[0] ) );
-          response.send( { user: results[0], success: true } );
+          let user = results[0];
+          // remove the hash from the token so we don't send it outside the system
+          delete user.hash;
+          response.setHeader( "X-Token", utils.generateToken( user ) );
+          response.send( { user: user, success: true } );
         }else{
           throw( "Invalid username/password combination." );
         }

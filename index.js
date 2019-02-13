@@ -8,8 +8,6 @@ app.use( express.static( 'client' ) );
 app.use( "/lib/gadget-ui", express.static( 'node_modules/gadget-ui' ) );
 app.use( "/lib/altseven", express.static( 'node_modules/altseven' ) );
 app.use( "/lib/modlazy", express.static( 'node_modules/modlazy' ) );
-app.use( "/lib/velocity", express.static( 'bower_components/velocity' ) );
-app.use( "/lib/mustache.js", express.static( 'bower_components/mustache.js' ) );
 app.use( "/lib/open-iconic", express.static( 'node_modules/open-iconic' ) );
 
 // routes for the API

@@ -1,8 +1,19 @@
+const interceptor = require( '../interceptors/httpinterceptor.js' );
+const aop = require( "tiny-aop" );
 
 module.exports = function(app) {
   const usercontroller = require( "../controllers/users.js" );
   const bodyParser = require('body-parser');
   var jsonParser = bodyParser.json();
+
+  for( var method in usercontroller ){
+    if( typeof usercontroller[ method ] == 'function' ){
+      aop.before( method, function(){
+        // checkHTTPAuth( request, response )
+        interceptor.checkHTTPAuth( arguments[0], arguments[1] );
+      }, [usercontroller]);
+    }
+  }
 
   // get all users
   app.get( "/users", usercontroller.getAll );

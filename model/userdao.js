@@ -1,4 +1,5 @@
 const dbConfig = require( "../config/dbconfig.js" );
+const bcrypt = require('bcryptjs');
 
 module.exports = init;
 
@@ -10,75 +11,90 @@ function init(){
 
 var dao = {
   create: function ( username, password, firstName, lastName ){
+    var salt = bcrypt.genSaltSync( 10 );
+    var hash = bcrypt.hashSync( password, salt );
+
     return new Promise( function( resolve, reject ){
-      pool.getConnection(function(err, connection) {
-        if (err) throw err;
-        connection.query('INSERT INTO users ( username, password, firstName, lastName, dateCreated ) VALUES ( ?, ?, ?, ?, curdate() )',
-          [username, password, firstName, lastName],
-          function (error, results, fields) {
-
-            connection.release();
-
-            if (error) reject( error );
-            resolve( results.insertId );
-          });
-      });
+      pool.getConnection()
+        .then( connection => {
+          connection.query('INSERT INTO users ( username, hash, firstName, lastName, dateCreated ) VALUES ( ?, ?, ?, ?, curdate() )',
+            [username, hash, firstName, lastName] )
+            .then( ( results ) => {
+              connection.end();
+              resolve( results.insertId );
+            })
+            .catch( err => {
+              connection.end();
+              reject( error );
+            });
+        })
+        .catch( err => {
+          //not connected
+          reject( err );
+        });
     });
   },
 
   read: function( userID ){
     return new Promise( function( resolve, reject ){
-      pool.getConnection(function(err, connection){
-        if (err) throw err;
-
-        var query = connection.query('SELECT username, password, firstName, lastName, dateCreated FROM users WHERE userID = ?',
-          [userID],
-          function (error, results, fields){
-
-            connection.release();
-
-            if (error) reject( error );
+      pool.getConnection()
+        .then( connection => {
+          connection.query('SELECT userID, username, hash, firstName, lastName, dateCreated FROM users WHERE userID = ?',
+            [userID] )
+          .then( ( results ) => {
+            connection.end();
             resolve( results[0] );
+          })
+          .catch( err => {
+            connection.end();
+            reject( err );
           });
-      });
+        })
+        .catch( err => {
+          reject( err );
+        });
     });
   },
 
-  update: function( userID, username, password, firstName, lastName ){
+  update: function( userID, username, firstName, lastName ){
     return new Promise( function( resolve, reject ){
-      pool.getConnection(function(err, connection) {
-        if (err) throw err;
+      pool.getConnection()
+        .then( connection => {
+          connection.query('UPDATE users SET username = ?, firstName = ?, lastName = ? WHERE userID = ?',
+            [ username, firstName, lastName, userID ] )
+            .then( ( results ) => {
+              connection.end();
+              resolve( true );
+            })
+            .catch( err =>{
+              connection.end();
+              reject( err );
+            });
 
-        connection.query('UPDATE users SET username = ?, password = ?, firstName = ?, lastName = ? WHERE userID = ?',
-          [ username, password, firstName, lastName, userID ],
-          function (error, results, fields){
-
-            connection.release();
-
-            if (error) reject( error );
-
-            resolve(true);
-          });
-      });
+        })
+        .catch( err =>{
+          reject( err );
+        });
     });
   },
 
   delete: function( userID ){
     return new Promise( function( resolve, reject ){
-      pool.getConnection(function(err, connection) {
-        if (err) throw err;
-
-        connection.query('DELETE FROM users WHERE userID = ?',
-          [userID],
-          function (error, results, fields){
-
-            connection.release();
-
-            if (error) reject( error );
-
-            resolve( true ); // successful delete
-          });
-      });
+      pool.getConnection()
+        .then( connection => {
+          connection.query('DELETE FROM users WHERE userID = ?', [userID] )
+            .then( ( results ) => {
+              connection.end();
+              resolve( true ); // successful delete
+            })
+            .catch( err =>{
+              connection.end();
+              reject( err );
+            });
+        })
+        .catch( err =>{
+          reject( err );
+        });
     });
   }
 };

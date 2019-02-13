@@ -10,4 +10,5 @@ module.exports = function(app) {
   app.post( "/auth/logout", authcontroller.logout );
 
   app.get( "/auth/refresh", authcontroller.refresh );
+
 };

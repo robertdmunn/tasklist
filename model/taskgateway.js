@@ -11,7 +11,24 @@ function init(){
 gateway = {
   getAll : function(){
     return new Promise( function( resolve, reject ){
-      pool.getConnection(function(err, connection) {
+      pool.getConnection()
+        .then( connection => {
+          connection.query('SELECT taskID, taskName, dateDue, dateCreated, dateCompleted FROM tasks ORDER BY dateDue')
+            .then( ( results ) =>{
+              connection.end();
+              resolve( results );
+            })
+            .catch( err =>{
+              //not connected
+              connection.end();
+              reject( err );
+            });
+        })
+        .catch( err => {
+          //not connected
+          reject( err );
+        });
+/*       pool.getConnection(function(err, connection) {
         if (err) throw err;
 
         connection.query('SELECT taskID, taskName, dateDue, dateCreated, dateCompleted FROM tasks ORDER BY dateDue',
@@ -23,6 +40,7 @@ gateway = {
             resolve( results );
           });
       });
+    }); */
     });
   }
 }

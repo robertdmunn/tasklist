@@ -1,47 +1,45 @@
-const aop = require( "tiny-aop" );
+//const aop = require( "tiny-aop" );
 const securityconfig = require( "../config/securityconfig.js" );
 const utils = require( '../model/utils' );
 const userservice = require( '../model/userservice' );
+module.exports = {
+  checkHTTPAuth : function(request, response){
+    console.log( "checkHTTPAuth: " + request.url );
+    if( securityconfig.routes.open.indexOf( request.url ) >= 0 ){
+      // open routes pass through
 
-const checkHTTPAuth = function(){
-  let uri = arguments[0];
-  console.log( "arguments: " + arguments );
-  if( securityconfig.routes.open.indexOf( uri ) >= 0 ){
-    // open routes pass through
+    }else if ( securityconfig.routes.secured.indexOf( request.url ) >= 0 ){
+      // check token
+      console.log( "Secured route check" );
+      let token = request.headers[ "x-token" ];
+      let auth = utils.checkAuthToken( token, securityconfig.ttl );
 
-  }else if ( securityconfig.routes.secured.indexOf( uri ) >= 0 ){
-    // check token
-    console.log( "Secured route check" );
-    let token = request.header( "X-Token" );
-    let auth = utils.checkAuthToken( token, securityconfig.ttl );
-    let user = userservice.read( auth.userID );
-    let valid = false;
-    if( user.userId > 0 && auth.expires > new Date() ){
-			valid = true;
-      // set the response header res.setHeader( "X-Token", utils.generateToken( user ) );
-      // this call sets a user object into the request
-			//SecurityService.setUser( local.user );
-		}else{
-      // denied
-			//response.messages = "Authorization expired.";
+      userservice.read( auth.userID )
+        .then( function( results ){
+          let user = results;
+          let now = new Date();
+          let valid = false;
+          if( user.userID > 0 && new Date( auth.expires ).getTime() > now.getTime() ){
+            valid = true;
+            // remove the hash from the token so we don't send it outside the system
+            delete user.hash;
+            response.setHeader( "X-Token", utils.generateToken( user ) );
+            // set the response header res.setHeader( "X-Token", utils.generateToken( user ) );
+            // this call sets a user object into the request
+            //SecurityService.setUser( local.user );
+          }else{
+            // denied
+            //response.messages = "Authorization expired.";
+            response.status( 401 );
+            response.send( "Not authorized." );
+          }
+          console.log( "token check- valid? " + valid );
+        })
+        .catch( function( error ){
+          console.log( error );
 
-		}
-    console.log( valid );
+        });
+
+    }
   }
-};
-
-module.exports = function( app ){
-  aop.before( "get", checkHTTPAuth, [ app ] );
-};
-
-module.exports = function( app ){
-  aop.before( "post", checkHTTPAuth, [ app ] );
-};
-
-module.exports = function( app ){
-  aop.before( "put", checkHTTPAuth, [ app ] );
-};
-
-module.exports = function( app ){
-  aop.before( "delete", checkHTTPAuth, [ app ] );
 };

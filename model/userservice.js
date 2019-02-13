@@ -17,8 +17,8 @@ module.exports = {
   read: function( userID ){
     return( dao.read( userID ) );
   },
-  update: function( userID, username, password, firstName, lastName ){
-    return( dao.update( userID, username, password, firstName, lastName ) );
+  update: function( userID, username, firstName, lastName ){
+    return( dao.update( userID, username, firstName, lastName ) );
   },
   delete: function( userID ){
     return( dao.delete( userID ) );
