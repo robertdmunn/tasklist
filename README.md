@@ -15,7 +15,7 @@ To configure the database, create an empty database schema in MySQL or MariaDB. 
 
 Copy the console output and update the hash field of the users table with the hash value:
 
-update users set hash = '<hashvalue>';
+update users set hash = 'hashvalue';
 
 
 Make sure to update the name and username/password for the database in /config/dbconfig.js.
