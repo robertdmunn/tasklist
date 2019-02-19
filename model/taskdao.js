@@ -9,11 +9,11 @@ function init(){
 }
 
 var dao = {
-  create: function ( taskName, dateDue ){
+  create: function ( userID, taskName, dateDue ){
     return new Promise( function( resolve, reject ){
       pool.getConnection()
         .then( connection => {
-          connection.query('INSERT INTO tasks ( taskName, dateCreated, dateDue ) VALUES ( ?, curdate(), ? )', [taskName, dateDue] )
+          connection.query('INSERT INTO tasks ( userID, taskName, dateCreated, dateDue ) VALUES ( ?, ?, curdate(), ? )', [userID, taskName, dateDue] )
             .then( ( results ) =>{
               connection.end();
               resolve( results.insertId );
@@ -29,11 +29,11 @@ var dao = {
     });
   },
 
-  read: function( taskID ){
+  read: function( taskID, userID ){
     return new Promise( function( resolve, reject ){
       pool.getConnection()
         .then( connection =>{
-          connection.query('SELECT taskID, taskName, dateCreated, dateDue, dateCompleted FROM tasks WHERE taskID = ?', [taskID] )
+          connection.query('SELECT userID, taskID, taskName, dateCreated, dateDue, dateCompleted FROM tasks WHERE taskID = ? AND userID = ?', [taskID, userID] )
             .then( ( results ) =>{
               connection.end();
               resolve( results[0] );
@@ -49,13 +49,13 @@ var dao = {
     });
   },
 
-  update: function( taskID, taskName, dateDue, complete ){
+  update: function( taskID, userID, taskName, dateDue, complete ){
     return new Promise( function( resolve, reject ){
       pool.getConnection()
         .then( connection => {
           var dateCompleted = ( complete ? new Date() : null );
           var due = new Date( dateDue );
-          connection.query('UPDATE tasks SET taskName = ?, dateDue = ?, dateCompleted = ? WHERE taskID = ?', [ taskName, due, dateCompleted, taskID ] )
+          connection.query('UPDATE tasks SET taskName = ?, dateDue = ?, dateCompleted = ? WHERE taskID = ? AND userID = ?', [ taskName, due, dateCompleted, taskID, userID ] )
             .then( ( results ) =>{
               connection.end();
               resolve(true);
@@ -71,11 +71,11 @@ var dao = {
     });
   },
 
-  delete: function( taskID ){
+  delete: function( taskID, userID ){
     return new Promise( function( resolve, reject ){
       pool.getConnection()
         .then( connection => {
-        connection.query('DELETE FROM tasks WHERE taskID = ?', [taskID])
+        connection.query('DELETE FROM tasks WHERE taskID = ? AND userID = ?', [taskID, userID])
           .then( ( results ) =>{
             connection.end();
             resolve( true ); // successful delete

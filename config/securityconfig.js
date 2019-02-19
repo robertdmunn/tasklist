@@ -1,16 +1,19 @@
 const secured = [
-  '/task',
-  '/task/',
-  '/tasks',
-  '/user',
-  '/user/',
-  '/users',
-  '/auth/refresh'
+  /\/post\/[0-9]+/,
+  /\/posts/,
+  /\/post/,
+  /\/task\/[0-9]+/,
+  /\/tasks/,
+  /\/task/,
+  /\/user\/[0-9]+/,
+  /\/users/,
+  /\/user/,
+  /\/auth\/refresh/,
 ];
 
 const open = [
-  '/auth/login',
-  '/auth/logout'
+  /\/auth\/login/,
+  /\/auth\/logout/
 ];
 
 module.exports = {

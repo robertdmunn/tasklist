@@ -9,11 +9,11 @@ function init(){
 }
 
 gateway = {
-  getAll : function(){
+  getAll : function( userID ){
     return new Promise( function( resolve, reject ){
       pool.getConnection()
         .then( connection => {
-          connection.query('SELECT taskID, taskName, dateDue, dateCreated, dateCompleted FROM tasks ORDER BY dateDue')
+          connection.query('SELECT taskID, taskName, dateDue, dateCreated, dateCompleted FROM tasks WHERE userID = ? ORDER BY dateDue', [userID])
             .then( ( results ) =>{
               connection.end();
               resolve( results );
@@ -28,19 +28,6 @@ gateway = {
           //not connected
           reject( err );
         });
-/*       pool.getConnection(function(err, connection) {
-        if (err) throw err;
-
-        connection.query('SELECT taskID, taskName, dateDue, dateCreated, dateCompleted FROM tasks ORDER BY dateDue',
-          function (error, results, fields) {
-
-            connection.release();
-            if (error) reject( error );
-
-            resolve( results );
-          });
-      });
-    }); */
     });
   }
 }
