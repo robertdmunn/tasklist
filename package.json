@@ -1,6 +1,6 @@
 {
   "name": "tasklist",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "example app for alt-seven and NodeJS",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   "author": "",
   "license": "MPL",
   "dependencies": {
-    "altseven": "^3.2.3",
+    "altseven": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",

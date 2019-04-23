@@ -13,7 +13,10 @@ gateway = {
     return new Promise( function( resolve, reject ){
       pool.getConnection()
         .then( connection => {
-          connection.query('SELECT taskID, taskName, dateDue, dateCreated, dateCompleted FROM tasks WHERE userID = ? ORDER BY dateDue', [userID])
+          connection.query(`SELECT taskID, taskName, dateDue, dateCreated, dateCompleted
+                            FROM tasks
+                            WHERE userID = ?
+                            ORDER BY dateDue`, [userID])
             .then( ( results ) =>{
               connection.end();
               resolve( results );

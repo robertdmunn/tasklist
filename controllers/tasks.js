@@ -65,7 +65,7 @@ module.exports = {
   },
 
   delete: function( request, response){
-    taskservice.delete( request.params.ID )
+    taskservice.delete( request.params.ID, request.user.userID )
       .then( function( success ){
         response.send( JSON.stringify( success ) );
       })

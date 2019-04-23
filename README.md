@@ -4,6 +4,16 @@ alt-seven is a client-side JavaScript framework. You can see the framework at:
 
 https://github.com/robertdmunn/altseven
 
+
+v 0.5.0
+========
+
+This version of Tasklist updates the code to work with alteven v 5.1.0, which simplifies component lifecycle and configuration and contains many improvements over the previous version of altseven included with the application.
+
+
+Installation
+=============
+
 The application depends on several packages, some of which are altseven dependencies and some of which are dependencies of the NodeJS application. To run the application, you need to install the dependencies from both Bower and npm.
 
     $ bower install

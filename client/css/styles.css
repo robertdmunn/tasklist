@@ -7,12 +7,25 @@ html, body{
 }
 
 div.row{
+  vertical-align: top;
   display:block;
 }
 
 div.col{
   display:inline-block;
   padding: .5em;
+}
+
+div.headerCol{
+  width:auto;
+}
+
+div.w30{
+  width:30em;
+}
+
+div.w20{
+  width:20em;
 }
 
 div.w10{

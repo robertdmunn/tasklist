@@ -1,7 +1,4 @@
 const secured = [
-  /\/post\/[0-9]+/,
-  /\/posts/,
-  /\/post/,
   /\/task\/[0-9]+/,
   /\/tasks/,
   /\/task/,
