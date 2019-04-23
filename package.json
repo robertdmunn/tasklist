@@ -13,11 +13,8 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "gadget-ui": "^6.0.1",
     "js-base64": "^2.5.0",
     "mariadb": "^2.0.3",
-    "modlazy": "^1.0.0",
-    "open-iconic": "^1.1.1",
     "sha.js": "^2.4.11"
   }
 }
